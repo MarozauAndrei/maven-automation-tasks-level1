@@ -28,6 +28,10 @@ public class StructureOfFiles {
     }
 
     private void writeDirectoryTree(String pathToFile) throws IOException {
+        File dir = new File(DirectoryNames.DIRECTORY_WITH_RESULTS);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
         File file = new File("src/main/java/task.2.2.result/tree.txt");
         try (Stream<Path> walk = Files.walk(Paths.get(pathToFile));
              FileWriter fileWriter = new FileWriter(file)) {
@@ -35,13 +39,13 @@ public class StructureOfFiles {
             listOfPath.forEach(x -> {
                 try {
                     if (new File(x).getPath().equals(new File(pathToFile).getPath())) {
-                        fileWriter.write(new File(x).getName() + "\n");
+                        fileWriter.write(new StringBuilder().append(new File(x).getName()).append("\n").toString());
                     } else {
                         if (new File(x).isDirectory()) {
-                            fileWriter.write("\n" + "|---" + new File(x).getName() + "\n");
+                            fileWriter.write(new StringBuilder().append("\n").append("|---").append(new File(x).getName()).append("\n").toString());
                         } else {
                             if (new File(x).isFile()) {
-                                fileWriter.write("|   " + new File(x).getName() + "\n");
+                                fileWriter.write(new StringBuilder().append("|   ").append(new File(x).getName()).append("\n").toString());
                             }
                         }
                     }
@@ -50,7 +54,7 @@ public class StructureOfFiles {
                 }
             });
         }
-        System.out.println("\n" + "Results of program in file: " + file.getPath());
+        System.out.println(new StringBuilder().append("\n").append("Results of program in file: ").append(file.getPath()));
     }
 
     private void getFileContent(File file) {
@@ -74,7 +78,7 @@ public class StructureOfFiles {
                 }
             }
         }
-        System.out.println("\n" + "Directory -" + arrayOfStrings.get(0) + "- includes:");
+        System.out.println(new StringBuilder().append("\n").append("Directory -").append(arrayOfStrings.get(0)).append("- includes:"));
         System.out.println("Count of directories = " + countOfDirectories);
         System.out.println("Count of files = " + countOfFiles);
         if (countOfDirectories > 0) {

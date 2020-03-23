@@ -4,7 +4,7 @@ import java.io.*;
 
 public class ReplaceMain {
     public static void main(String[] args) {
-        File dir = new File("src/main/java/task.2.2.result");
+        File dir = new File(DirectoryNames.DIRECTORY_WITH_RESULTS);
         if (!dir.exists()) {
             dir.mkdir();
         }
