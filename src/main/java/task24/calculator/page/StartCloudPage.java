@@ -7,14 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class StartCloudPage {
+public class StartCloudPage extends AbstractPage {
     private static final String START_PAGE_URL = "https://cloud.google.com/";
     private final String SEARCH_BUTTON_LOCATOR = "//input[@name='q']";
-    private WebDriver driver;
     private String researchString = "Google Cloud Platform Pricing Calculator";
 
     public StartCloudPage (WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public StartCloudPage openStartPage() {

@@ -11,15 +11,13 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-public class TenMinutesMailPage {
+public class TenMinutesMailPage extends AbstractPage {
     final String BUFFER_BUTTON_LOCATOR = "//*[@id='copy_address']";
     final String MESSAGE_TOP_LOCATOR = "//*[@class='message_top']";
     final String TOTAL_COST_LOCATOR = "//table[@class='quote']/descendant::h3[not(contains(text(),'Total'))]";
-    private WebDriver driver;
 
     public TenMinutesMailPage (WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public String getEmaiAddress(WebDriverWait webDriverWait) throws IOException, UnsupportedFlavorException {
@@ -32,7 +30,9 @@ public class TenMinutesMailPage {
 
     public String getCostFromEmail(WebDriverWait webDriverWait) {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(MESSAGE_TOP_LOCATOR)));
-        driver.findElement(By.xpath(MESSAGE_TOP_LOCATOR)).click();
+//        driver.findElement(By.xpath(MESSAGE_TOP_LOCATOR)).click();
+        Actions builder = new Actions(driver);
+        builder.moveToElement(driver.findElement(By.xpath(MESSAGE_TOP_LOCATOR))).click();
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(TOTAL_COST_LOCATOR)));
         return driver.findElement(By.xpath(TOTAL_COST_LOCATOR)).getText();
     }

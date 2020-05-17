@@ -5,12 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SearchResultPage {
+public class SearchResultPage extends AbstractPage {
     private final String CALCULATOR_BUTTON_LOCATOR = "//div[@class='gsc-thumbnail-inside']/descendant::b[text()='Google Cloud Platform Pricing Calculator']";
-    private WebDriver driver;
 
     public SearchResultPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public CloudCalculatorPage chooseCalculator(WebDriverWait webDriverWait) {

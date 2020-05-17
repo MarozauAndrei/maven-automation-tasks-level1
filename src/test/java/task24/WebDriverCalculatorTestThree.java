@@ -1,24 +1,18 @@
 package task24;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import task24.calculator.model.ComputerEngine;
 import task24.calculator.page.CloudCalculatorPage;
 import task24.calculator.page.EstimateWindowPage;
 import task24.calculator.page.StartCloudPage;
+import task24.calculator.service.ComputeEngineCreator;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class WebDriverCalculatorTestThree {
-    private WebDriver driver;
-    private int webDriverTimeOut = 10;
+public class WebDriverCalculatorTestThree extends CommonConditions{
     private final List<String> expectedResults = Arrays.asList(
             "VM class: regular",
             "Instance type: n1-standard-8",
@@ -28,25 +22,21 @@ public class WebDriverCalculatorTestThree {
             "Estimated Component Cost: USD 1,082.77 per 1 month"
     );
 
-    @BeforeMethod(alwaysRun = true)
-    public void browserSetUp() {
-        driver = new ChromeDriver();
-    }
-
     @Test(description = "Test N3 - Check of completing google calculator")
     public void completeAndCheckGoogleCalculator() {
-        WebDriverWait webDriverWait = new WebDriverWait(driver, webDriverTimeOut);
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
         CloudCalculatorPage cloudCalculatorPage = new StartCloudPage(driver).openStartPage()
                 .searchCalculatorInCloud(webDriverWait).chooseCalculator(webDriverWait);
         cloudCalculatorPage.moveToFrame(webDriverWait);
-        cloudCalculatorPage.setNumberOfInstance(webDriverWait);
-        cloudCalculatorPage.setMachineType(executor);
-        cloudCalculatorPage.completeGpuArea(webDriverWait, executor);
-        cloudCalculatorPage.setLocalssd(executor);
-        cloudCalculatorPage.setDatacenterLocation(executor);
-        cloudCalculatorPage.setCommittedUsage(executor);
-        EstimateWindowPage estimateWindowPage = cloudCalculatorPage.saveEstimate(executor);
+
+        ComputerEngine testComputerEngine = ComputeEngineCreator.createNewComputerEngine();
+        cloudCalculatorPage.setNumberOfInstance(webDriverWait, testComputerEngine);
+        cloudCalculatorPage.setMachineType(webDriverWait, testComputerEngine);
+        cloudCalculatorPage.completeGpuArea(webDriverWait, testComputerEngine);
+        cloudCalculatorPage.setLocalssd(testComputerEngine);
+        cloudCalculatorPage.setDatacenterLocation(testComputerEngine);
+        cloudCalculatorPage.setCommittedUsage(testComputerEngine);
+
+        EstimateWindowPage estimateWindowPage = cloudCalculatorPage.saveEstimate();
         List<WebElement> optionsOfResult = estimateWindowPage.getListOfEstimateResults(webDriverWait);
         optionsOfResult.remove(0);
 
@@ -56,11 +46,5 @@ public class WebDriverCalculatorTestThree {
                     optionsOfResult.get(i).getText() + " - is wrong field   ");
             }
         softAssert.assertAll();
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void browserTurnOff() {
-        driver.quit();
-        driver = null;
     }
 }

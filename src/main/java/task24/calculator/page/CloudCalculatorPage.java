@@ -6,9 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import task24.calculator.model.ComputerEngine;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class CloudCalculatorPage {
+public class CloudCalculatorPage extends AbstractPage {
     private final String FIRST_FRAME_LOCATOR = "//*[@id='cloud-site']/devsite-iframe/iframe";
     private final String NUMBER_OF_INSTANCES_LOCATOR = "//*[@id='input_58']";
     private final String MACHINE_TYPE_LOCATOR = "//*[@id='select_83']";
@@ -21,11 +24,10 @@ public class CloudCalculatorPage {
     private final String SAVE_BUTTON_LOCATOR = "//form[@name='ComputeEngineForm']/descendant::" +
             "button[@class='md-raised md-primary cpc-button md-button md-ink-ripple']";
     private final String RESULT_LIST_TAG = "md-option";
-        private WebDriver driver;
     private String nameOfSecondFrame = "myFrame";
 
     public CloudCalculatorPage (WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public void moveToFrame(WebDriverWait webDriverWait) {
@@ -34,45 +36,70 @@ public class CloudCalculatorPage {
         driver.switchTo().frame(firstFrame).switchTo().frame(nameOfSecondFrame);
     }
 
-    public void setNumberOfInstance (WebDriverWait webDriverWait) {
+    public void setNumberOfInstance (WebDriverWait webDriverWait, ComputerEngine computerEngine) {
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(NUMBER_OF_INSTANCES_LOCATOR)));
-        driver.findElement(By.xpath(NUMBER_OF_INSTANCES_LOCATOR)).sendKeys("4");
+        driver.findElement(By.xpath(NUMBER_OF_INSTANCES_LOCATOR)).sendKeys(computerEngine.getNumberOfInstances());
     }
 
-    public void setMachineType(JavascriptExecutor executor) {
+    public void setMachineType(WebDriverWait webDriverWait, ComputerEngine computerEngine) {
         List<WebElement> optionsOfMachineType = driver.findElement(By.xpath(MACHINE_TYPE_LOCATOR))
                 .findElements(By.tagName(RESULT_LIST_TAG));
-        executor.executeScript("arguments[0].click();", optionsOfMachineType.get(6));
+        for (int i = 0; i < optionsOfMachineType.size(); i++) {
+            executor.executeScript("arguments[0].click();", optionsOfMachineType.get(i));
+            if (driver.findElement(By.xpath(MACHINE_TYPE_LOCATOR)).getText().equals(computerEngine.getMachineType())) {
+                i = optionsOfMachineType.size();
+            }
+        }
     }
 
-    public void completeGpuArea(WebDriverWait webDriverWait, JavascriptExecutor executor) {
+    public void completeGpuArea(WebDriverWait webDriverWait, ComputerEngine computerEngine) {
         executor.executeScript("arguments[0].click();", driver.findElement(By.xpath(GPU_LOCATOR)));
         webDriverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(NUMBER_OF_GPU_LOCATOR)));
-        driver.findElement(By.xpath(NUMBER_OF_GPU_LOCATOR)).sendKeys("1");
+        driver.findElement(By.xpath(NUMBER_OF_GPU_LOCATOR)).sendKeys(computerEngine.getNumberOfGpu());
         List<WebElement> optionsOfGpuType = driver.findElement(By.xpath(GPU_TYPE_LOCATOR))
                 .findElements(By.tagName(RESULT_LIST_TAG));
-        executor.executeScript("arguments[0].click();", optionsOfGpuType.get(3));
+        for (int i = 0; i < optionsOfGpuType.size(); i++) {
+            executor.executeScript("arguments[0].click();", optionsOfGpuType.get(i));
+            if (driver.findElement(By.xpath(GPU_TYPE_LOCATOR)).getText().equals(computerEngine.getGpuType())) {
+                i = optionsOfGpuType.size();
+            }
+        }
     }
 
-    public void setLocalssd(JavascriptExecutor executor) {
+    public void setLocalssd(ComputerEngine computerEngine) {
         List<WebElement> optionsOfLocalSsd = driver.findElement(By.xpath(LOCAL_SSD_LOCATOR))
                 .findElements(By.tagName(RESULT_LIST_TAG));
-        executor.executeScript("arguments[0].click();", optionsOfLocalSsd.get(2));
+        for (int i = 0; i < optionsOfLocalSsd.size(); i++) {
+            executor.executeScript("arguments[0].click();", optionsOfLocalSsd.get(i));
+            if (driver.findElement(By.xpath(LOCAL_SSD_LOCATOR)).getText().equals(computerEngine.getLocalSsd())) {
+                i = optionsOfLocalSsd.size();
+            }
+        }
     }
 
-    public void setDatacenterLocation(JavascriptExecutor executor) {
+    public void setDatacenterLocation(ComputerEngine computerEngine) {
         List<WebElement> optionsOfDatacetnter = driver.findElement(By.xpath(DATACENTER_LOCATOR))
                 .findElements(By.tagName(RESULT_LIST_TAG));
-        executor.executeScript("arguments[0].click();", optionsOfDatacetnter.get(9));
+        for (int i = 0; i < optionsOfDatacetnter.size(); i++) {
+            executor.executeScript("arguments[0].click();", optionsOfDatacetnter.get(i));
+            if (driver.findElement(By.xpath(DATACENTER_LOCATOR)).getText().contains(computerEngine.getDatacenterLocation())) {
+                i = optionsOfDatacetnter.size();
+            }
+        }
     }
 
-    public void setCommittedUsage(JavascriptExecutor executor) {
+    public void setCommittedUsage(ComputerEngine committedUsage) {
             List<WebElement> optionsOfUsage = driver.findElement(By.xpath(USAGE_LOCATOR))
                 .findElements(By.tagName(RESULT_LIST_TAG));
-        executor.executeScript("arguments[0].click();", optionsOfUsage.get(1));
+        for (int i = 0; i < optionsOfUsage.size(); i++) {
+            executor.executeScript("arguments[0].click();", optionsOfUsage.get(i));
+            if (driver.findElement(By.xpath(USAGE_LOCATOR)).getText().equals(committedUsage.getCommittedUsage())) {
+                i = optionsOfUsage.size();
+            }
+        }
     }
 
-    public EstimateWindowPage saveEstimate(JavascriptExecutor executor) {
+    public EstimateWindowPage saveEstimate() {
         executor.executeScript("arguments[0].click();", driver.findElement(By.xpath(SAVE_BUTTON_LOCATOR)));
         return new EstimateWindowPage(driver);
     }
