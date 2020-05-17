@@ -1,2 +1,10 @@
 # Project exclude paths
+<<<<<<< HEAD
 /target/pom.
+=======
+/target
+.idea*
+.gitignore
+
+.txt
+>>>>>>> 8737406916e6539f433f9cc4d99ff654efb78c04
