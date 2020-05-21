@@ -1,6 +1,6 @@
-package task24.calculator.service;
+package task28.calculator.service;
 
-import task24.calculator.model.ComputerEngine;
+import task28.calculator.model.ComputerEngine;
 
 public class ComputeEngineCreator {
     private static final String NUMBER_OF_INSTANCES = "4";

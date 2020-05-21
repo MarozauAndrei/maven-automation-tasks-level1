@@ -1,4 +1,4 @@
-package task24.calculator.page;
+package task28.calculator.page;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

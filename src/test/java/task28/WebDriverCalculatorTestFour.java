@@ -1,26 +1,18 @@
-package task24;
+package task28;
 
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import task24.calculator.driver.DriverSingleton;
-import task24.calculator.model.ComputerEngine;
-import task24.calculator.page.CloudCalculatorPage;
-import task24.calculator.page.EstimateWindowPage;
-import task24.calculator.page.StartCloudPage;
-import task24.calculator.page.TenMinutesMailPage;
-import task24.calculator.service.ComputeEngineCreator;
+import task28.calculator.model.ComputerEngine;
+import task28.calculator.page.CloudCalculatorPage;
+import task28.calculator.page.EstimateWindowPage;
+import task28.calculator.page.StartCloudPage;
+import task28.calculator.page.TenMinutesMailPage;
+import task28.calculator.service.ComputeEngineCreator;
 
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class WebDriverCalculatorTestFour extends CommonConditions {
     private final String MAIL_PAGE_URL = "https://10minutemail.com/";

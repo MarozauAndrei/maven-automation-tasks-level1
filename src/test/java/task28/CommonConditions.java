@@ -1,4 +1,4 @@
-package task24;
+package task28;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

@@ -1,14 +1,12 @@
-package task24.calculator.page;
+package task28.calculator.page;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import task24.calculator.model.ComputerEngine;
+import task28.calculator.model.ComputerEngine;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CloudCalculatorPage extends AbstractPage {

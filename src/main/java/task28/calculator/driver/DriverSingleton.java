@@ -1,4 +1,4 @@
-package task24.calculator.driver;
+package task28.calculator.driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

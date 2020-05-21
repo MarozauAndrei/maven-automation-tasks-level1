@@ -1,4 +1,4 @@
-package task24.calculator.page;
+package task28.calculator.page;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;

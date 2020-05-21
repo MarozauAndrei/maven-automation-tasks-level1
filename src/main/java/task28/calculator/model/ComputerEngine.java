@@ -1,4 +1,4 @@
-package task24.calculator.model;
+package task28.calculator.model;
 
 import java.util.Objects;
 

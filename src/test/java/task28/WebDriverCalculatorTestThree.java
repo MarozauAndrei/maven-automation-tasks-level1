@@ -1,13 +1,13 @@
-package task24;
+package task28;
 
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import task24.calculator.model.ComputerEngine;
-import task24.calculator.page.CloudCalculatorPage;
-import task24.calculator.page.EstimateWindowPage;
-import task24.calculator.page.StartCloudPage;
-import task24.calculator.service.ComputeEngineCreator;
+import task28.calculator.model.ComputerEngine;
+import task28.calculator.page.CloudCalculatorPage;
+import task28.calculator.page.EstimateWindowPage;
+import task28.calculator.page.StartCloudPage;
+import task28.calculator.service.ComputeEngineCreator;
 
 import java.util.Arrays;
 import java.util.List;
