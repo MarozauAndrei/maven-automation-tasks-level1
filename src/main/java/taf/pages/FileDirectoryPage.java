@@ -1,67 +1,73 @@
 package taf.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class FileDirectoryPage {
-    private final String USER_DIRECTORY_LOCATOR = "//*[@class='client-listing']";
-    private final String CREATE_NEW_DOCUMENT_LOCATOR = "//*[text()='Текстовый документ']/parent::*";
-    private final String NAME_DOCUMENT_LOCATOR_FORMAT = "//*[@title='%s.docx']";
-    private final String DELETE_BUTTON_LOCATOR = "//*[contains(text(),'Удалить')]/parent::*[@data-lego='react']";
-    private final String RETURN_TO_DISK_BUTTON_LOCATOR = "//button[@id='/disk']";
-    private WebDriver driver;
-    private Actions builder;
 
-    public FileDirectoryPage(WebDriver driver) {
-        this.driver = driver;
-        this.builder = new Actions(driver);
-    }
+  private final String userDirectoryLocator = "//*[@class='client-listing']";
+  private final String createNewDocumentLocator = "//*[text()='Текстовый документ']/parent::*";
+  private final String nameDocumentLocatorFormat = "//*[@title='%s.docx']";
+  private final String deleteButtonLocator =
+      "//*[contains(text(),'Удалить')]/parent::*[@data-lego='react']";
+  private final String returnToDiskButtonLocator = "//button[@id='/disk']";
+  private WebDriver driver;
+  private Actions action;
 
-    public boolean checkNewDirectory (WebDriverWait webDriverWait) {
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(USER_DIRECTORY_LOCATOR)));
-        return driver.findElement(By.xpath(USER_DIRECTORY_LOCATOR)).isDisplayed();
-    }
+  public FileDirectoryPage(WebDriver driver) {
+    this.driver = driver;
+    this.action = new Actions(driver);
+  }
 
-    public DocumentWordPage createNewDocument (WebDriverWait webDriverWait) {
-        builder.moveToElement(driver.findElement(By.xpath(USER_DIRECTORY_LOCATOR))).contextClick().build().perform();
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(CREATE_NEW_DOCUMENT_LOCATOR)));
-        driver.findElement(By.xpath(CREATE_NEW_DOCUMENT_LOCATOR)).click();
-        return new DocumentWordPage(driver);
-    }
+  public boolean checkNewDirectory(WebDriverWait wait) {
+    wait.until(visibilityOfAllElementsLocatedBy(By.xpath(
+        userDirectoryLocator)));
+    return driver.findElement(By.xpath(userDirectoryLocator)).isDisplayed();
+  }
 
-    public boolean checkExistOfDocument(WebDriverWait webDriverWait, String fileName) {
-        String locator = String.format(NAME_DOCUMENT_LOCATOR_FORMAT, fileName);
-        try {
-            webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(locator)));
-            return driver.findElement(By.xpath(locator)).isDisplayed();
-        } catch (TimeoutException | NoSuchElementException e) {
-            return false;
-        }
-    }
+  public DocumentWordPage createNewDocument(WebDriverWait wait) {
+    action.moveToElement(driver.findElement(By.xpath(userDirectoryLocator)))
+        .contextClick().build().perform();
+    wait.until(elementToBeClickable(By.xpath(createNewDocumentLocator)));
+    driver.findElement(By.xpath(createNewDocumentLocator)).click();
+    return new DocumentWordPage(driver);
+  }
 
-    public void openDocument (WebDriverWait webDriverWait, String fileName) {
-        driver.navigate().refresh();
-        String locator = String.format(NAME_DOCUMENT_LOCATOR_FORMAT, fileName);
-        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
-        builder.moveToElement(driver.findElement(By.xpath(locator))).doubleClick().build().perform();
-    }
+  public boolean checkExistOfDocument(String fileName) {
+    String locator = String.format(nameDocumentLocatorFormat, fileName);
+    return driver.findElements(By.xpath(locator)).isEmpty();
+  }
 
-    public void deleteDocument(WebDriverWait webDriverWait, String fileName) throws InterruptedException {
-        String locator = String.format(NAME_DOCUMENT_LOCATOR_FORMAT, fileName);
-        builder.moveToElement(driver.findElement(By.xpath(locator))).contextClick().build().perform();
-        Thread.sleep(3000);
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(DELETE_BUTTON_LOCATOR)));
-        driver.findElement(By.xpath(DELETE_BUTTON_LOCATOR)).click();
-    }
+  public FileDirectoryPage openDocument(WebDriverWait wait, String fileName) {
+    driver.navigate().refresh();
+    wait.until(presenceOfAllElementsLocatedBy(By.xpath(userDirectoryLocator)));
+    String locator = String.format(nameDocumentLocatorFormat, fileName);
+    wait.until(presenceOfElementLocated(By.xpath(locator)));
+    action.moveToElement(driver.findElement(By.xpath(locator)))
+        .doubleClick().build().perform();
+    return this;
+  }
 
-    public MainMenuSectionFilePage returnToFileSection(WebDriverWait webDriverWait) {
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(RETURN_TO_DISK_BUTTON_LOCATOR)));
-        driver.findElement(By.xpath(RETURN_TO_DISK_BUTTON_LOCATOR)).click();
-        return new MainMenuSectionFilePage(driver);
-    }
+  public FileDirectoryPage deleteDocument(WebDriverWait wait, String fileName) {
+    driver.navigate().refresh();
+    String locator = String.format(nameDocumentLocatorFormat, fileName);
+    wait.until(presenceOfAllElementsLocatedBy(By.xpath(locator)));
+    action.moveToElement(driver.findElement(By.xpath(locator)))
+        .contextClick().build().perform();
+    wait.until(elementToBeClickable(By.xpath(deleteButtonLocator)));
+    driver.findElement(By.xpath(deleteButtonLocator)).click();
+    return this;
+  }
+
+  public MainMenuSectionFilePage returnToFileSection(WebDriverWait wait) {
+    wait.until(elementToBeClickable(By.xpath(
+        returnToDiskButtonLocator)));
+    driver.findElement(By.xpath(returnToDiskButtonLocator)).click();
+    return new MainMenuSectionFilePage(driver);
+  }
 }

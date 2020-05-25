@@ -6,23 +6,24 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class YandexDiscStartPage {
-    private final String START_PAGE_URL = "http://disc.yandex.by";
-    private final String LOGIN_BUTTON_LOCATOR = "//*[contains(text(),'Войти')]";
-    private WebDriver driver;
 
-    public YandexDiscStartPage (WebDriver driver) {
-        this.driver = driver;
-    }
+  private final String startPageUrl = "http://disc.yandex.by";
+  private final String loginButtonLocator = "//*[contains(text(),'Войти')]";
+  private WebDriver driver;
 
-    public YandexDiscStartPage openPage() {
-        driver.get(START_PAGE_URL);
-        driver.manage().window().maximize();
-        return this;
-    }
+  public YandexDiscStartPage(WebDriver driver) {
+    this.driver = driver;
+  }
 
-    public LogInYandexDiscPage clickLogInButton(WebDriverWait webDriverWait) {
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(LOGIN_BUTTON_LOCATOR)));
-        driver.findElement(By.xpath(LOGIN_BUTTON_LOCATOR)).click();
-        return new LogInYandexDiscPage(driver);
-    }
+  public YandexDiscStartPage openPage() {
+    driver.get(startPageUrl);
+    driver.manage().window().maximize();
+    return this;
+  }
+
+  public LogInYandexDiscPage clickLogInButton(WebDriverWait wait) {
+    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(loginButtonLocator)));
+    driver.findElement(By.xpath(loginButtonLocator)).click();
+    return new LogInYandexDiscPage(driver);
+  }
 }
