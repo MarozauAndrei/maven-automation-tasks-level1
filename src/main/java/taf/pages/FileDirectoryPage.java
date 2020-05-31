@@ -1,73 +1,68 @@
 package taf.pages;
 
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.WebElement;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class FileDirectoryPage {
+public class FileDirectoryPage extends AbstractPage {
 
+  private final String directoryTitleLocator = "//*[@class='client-listing']/descendant::h1";
   private final String userDirectoryLocator = "//*[@class='client-listing']";
   private final String createNewDocumentLocator = "//*[text()='Текстовый документ']/parent::*";
-  private final String nameDocumentLocatorFormat = "//*[@title='%s.docx']";
   private final String deleteButtonLocator =
       "//*[contains(text(),'Удалить')]/parent::*[@data-lego='react']";
   private final String returnToDiskButtonLocator = "//button[@id='/disk']";
-  private WebDriver driver;
-  private Actions action;
+  private final String pageTag = "html";
 
   public FileDirectoryPage(WebDriver driver) {
-    this.driver = driver;
-    this.action = new Actions(driver);
+    super(driver);
   }
 
-  public boolean checkNewDirectory(WebDriverWait wait) {
-    wait.until(visibilityOfAllElementsLocatedBy(By.xpath(
-        userDirectoryLocator)));
-    return driver.findElement(By.xpath(userDirectoryLocator)).isDisplayed();
+  public WebElement getDirectoryTitle(WebDriverWait wait) {
+    wait.until(visibilityOfAllElementsLocatedBy(By.xpath(directoryTitleLocator)));
+    return driver.findElement(By.xpath(directoryTitleLocator));
   }
 
-  public DocumentWordPage createNewDocument(WebDriverWait wait) {
-    action.moveToElement(driver.findElement(By.xpath(userDirectoryLocator)))
-        .contextClick().build().perform();
-    wait.until(elementToBeClickable(By.xpath(createNewDocumentLocator)));
-    driver.findElement(By.xpath(createNewDocumentLocator)).click();
-    return new DocumentWordPage(driver);
-  }
-
-  public boolean checkExistOfDocument(String fileName) {
-    String locator = String.format(nameDocumentLocatorFormat, fileName);
-    return driver.findElements(By.xpath(locator)).isEmpty();
-  }
-
-  public FileDirectoryPage openDocument(WebDriverWait wait, String fileName) {
-    driver.navigate().refresh();
-    wait.until(presenceOfAllElementsLocatedBy(By.xpath(userDirectoryLocator)));
-    String locator = String.format(nameDocumentLocatorFormat, fileName);
-    wait.until(presenceOfElementLocated(By.xpath(locator)));
-    action.moveToElement(driver.findElement(By.xpath(locator)))
-        .doubleClick().build().perform();
+  public FileDirectoryPage contextClickDirectoryArea(WebDriverWait wait) {
+    contextClickElement(By.xpath(userDirectoryLocator), wait);
     return this;
   }
 
-  public FileDirectoryPage deleteDocument(WebDriverWait wait, String fileName) {
+  public DocumentWordPage createNewDocument(WebDriverWait wait) {
+    clickElement(By.xpath(createNewDocumentLocator), wait);
+    return new DocumentWordPage(driver);
+  }
+
+  public List<WebElement> getElementNameDocument(WebDriverWait wait, String fileName) {
     driver.navigate().refresh();
-    String locator = String.format(nameDocumentLocatorFormat, fileName);
-    wait.until(presenceOfAllElementsLocatedBy(By.xpath(locator)));
-    action.moveToElement(driver.findElement(By.xpath(locator)))
-        .contextClick().build().perform();
-    wait.until(elementToBeClickable(By.xpath(deleteButtonLocator)));
-    driver.findElement(By.xpath(deleteButtonLocator)).click();
+    wait.until(presenceOfAllElementsLocatedBy(By.tagName(pageTag)));
+    return driver.findElements(By.xpath(makeLocator(fileName)));
+  }
+
+  public DocumentWordPage openDocument(WebDriverWait wait, String fileName) {
+    wait.until(presenceOfAllElementsLocatedBy(By.xpath(userDirectoryLocator)));
+    doubleClickElement(By.xpath(makeLocator(fileName)), wait);
+    return new DocumentWordPage(driver);
+  }
+
+  public FileDirectoryPage contextClickDocument(WebDriverWait wait, String fileName) {
+    driver.navigate().refresh();
+    contextClickElement(By.xpath(makeLocator(fileName)), wait);
+    return this;
+  }
+
+  public FileDirectoryPage deleteDocument(WebDriverWait wait) {
+    clickElement(By.xpath(deleteButtonLocator), wait);
     return this;
   }
 
   public MainMenuSectionFilePage returnToFileSection(WebDriverWait wait) {
-    wait.until(elementToBeClickable(By.xpath(
-        returnToDiskButtonLocator)));
-    driver.findElement(By.xpath(returnToDiskButtonLocator)).click();
+    clickElement(By.xpath(returnToDiskButtonLocator), wait);
     return new MainMenuSectionFilePage(driver);
   }
 }

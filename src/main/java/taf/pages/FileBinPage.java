@@ -1,39 +1,40 @@
 package taf.pages;
 
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.WebElement;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class FileBinPage {
+public class FileBinPage extends AbstractPage {
 
-  private final String documentLocatorFormat = "//*[@title='%s.docx']";
   private final String binAreaId = "app";
   private final String cleanBinButtonLocator = "//*[contains(text(),'Очистить Корзину')]";
   private final String deleteButtonLocator =
       "//div[@class='modal__content']/descendant::*[contains(text(),'Очистить')]/..";
-  private WebDriver driver;
+  private final String signOfCleanBinLocator = "//*[contains(text(),'Корзина успешно очищена.')]";
 
   public FileBinPage(WebDriver driver) {
-    this.driver = driver;
+    super(driver);
   }
 
-  public boolean checkExistOfDocumentInBin(WebDriverWait wait, String fileName) {
-    String locator = String.format(documentLocatorFormat, fileName);
+  public List<WebElement> getDocumentFromBin(WebDriverWait wait, String fileName) {
+    driver.navigate().refresh();
     wait.until(presenceOfAllElementsLocatedBy(By.id(binAreaId)));
-    return driver.findElements(By.xpath(locator)).isEmpty();
+    return driver.findElements(By.xpath(makeLocator(fileName)));
   }
 
-  public void cleanTheBin(WebDriverWait wait) {
-    wait.until(elementToBeClickable(By.xpath(cleanBinButtonLocator)));
-    Actions action = new Actions(driver);
-    action.moveToElement(driver.findElement(By.xpath(cleanBinButtonLocator)))
-        .click().build().perform();
-    wait.until(elementToBeClickable(By.xpath(deleteButtonLocator)));
-    action.moveToElement(driver.findElement(By.xpath(deleteButtonLocator)))
-        .click().build().perform();
+  public FileBinPage clickButtonClearBin(WebDriverWait wait) {
+    moveAndClickElement(By.xpath(cleanBinButtonLocator), wait);
+    return this;
+  }
+
+  public FileBinPage clickButtonClear(WebDriverWait wait) {
+    moveAndClickElement(By.xpath(deleteButtonLocator), wait);
+    wait.until(visibilityOfAllElementsLocatedBy(By.xpath(signOfCleanBinLocator)));
+    return this;
   }
 }

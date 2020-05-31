@@ -2,17 +2,15 @@ package taf.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class YandexDiscStartPage {
+public class YandexDiscStartPage extends AbstractPage {
 
   private final String startPageUrl = "http://disc.yandex.by";
   private final String loginButtonLocator = "//*[contains(text(),'Войти')]";
-  private WebDriver driver;
 
   public YandexDiscStartPage(WebDriver driver) {
-    this.driver = driver;
+    super(driver);
   }
 
   public YandexDiscStartPage openPage() {
@@ -22,8 +20,7 @@ public class YandexDiscStartPage {
   }
 
   public LogInYandexDiscPage clickLogInButton(WebDriverWait wait) {
-    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(loginButtonLocator)));
-    driver.findElement(By.xpath(loginButtonLocator)).click();
+    clickElement(By.xpath(loginButtonLocator), wait);
     return new LogInYandexDiscPage(driver);
   }
 }

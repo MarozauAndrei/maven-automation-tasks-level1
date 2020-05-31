@@ -3,13 +3,12 @@ package taf.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class MainMenuSectionFilePage {
+public class MainMenuSectionFilePage extends AbstractPage {
 
   private final String mainMenuElementBodyLocator = "//*[@id='app']";
   private final String createNewDirectoryLocator =
@@ -22,41 +21,43 @@ public class MainMenuSectionFilePage {
       "//div[@class = 'listing__items']/descendant::*[@title='%s']";
   private final String binLocator =
       "//*[contains(text(),'Корзина')]/ancestor::div[@class = 'listing-item__info']";
-  private WebDriver driver;
-  private Actions action;
 
   public MainMenuSectionFilePage(WebDriver driver) {
-    this.driver = driver;
-    this.action = new Actions(driver);
+    super(driver);
   }
 
-  public MainMenuSectionFilePage createNewDirectory(WebDriverWait wait, String directoryName) {
-    wait.until(presenceOfAllElementsLocatedBy(By.xpath(mainMenuElementBodyLocator)));
-    action.moveToElement(driver.findElement(By.xpath(mainMenuElementBodyLocator)))
-        .contextClick().build().perform();
-    wait.until(elementToBeClickable(By.xpath(createNewDirectoryLocator)));
-    driver.findElement(By.xpath(createNewDirectoryLocator)).click();
+  public MainMenuSectionFilePage contextClickFileSection(WebDriverWait wait) {
+    contextClickElement(By.xpath(mainMenuElementBodyLocator), wait);
+    return this;
+  }
+
+  public MainMenuSectionFilePage createNewDirectory(WebDriverWait wait) {
+    clickElement(By.xpath(createNewDirectoryLocator), wait);
+    return this;
+  }
+
+  public MainMenuSectionFilePage inputDirectoryName(WebDriverWait wait, String directoryName) {
     wait.until(visibilityOfAllElementsLocatedBy(By.xpath(nameDirectoryLocator)));
     action.moveToElement(driver.findElement(By.xpath(nameDirectoryLocator)))
         .sendKeys(Keys.DELETE)
         .sendKeys(directoryName)
         .build().perform();
+    return this;
+  }
+
+  public MainMenuSectionFilePage clickSaveDirectoryButton() {
     driver.findElement(By.xpath(saveDirectoryButtonLocator)).click();
     return this;
   }
 
-  public FileDirectoryPage openNewDirectory(WebDriverWait wait, String directoryName) {
+  public FileDirectoryPage openDirectory(WebDriverWait wait, String directoryName) {
     String newDirectoryLocator = String.format(newDirectoryLocatorFormat, directoryName);
-    wait.until(visibilityOfAllElementsLocatedBy(By.xpath(newDirectoryLocator)));
-    action.moveToElement(driver.findElement(By.xpath(newDirectoryLocator)))
-        .doubleClick().build().perform();
+    doubleClickElement(By.xpath(newDirectoryLocator), wait);
     return new FileDirectoryPage(driver);
   }
 
   public FileBinPage openBin(WebDriverWait wait) {
-    wait.until(visibilityOfAllElementsLocatedBy(By.xpath(binLocator)));
-    action.moveToElement(driver.findElement(By.xpath(binLocator)))
-        .doubleClick().build().perform();
+    doubleClickElement(By.xpath(binLocator), wait);
     return new FileBinPage(driver);
   }
 }
