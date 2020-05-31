@@ -24,6 +24,7 @@ public class DocumentWordPage extends AbstractPage {
       "//*[contains(text(),'Переименовать')]/ancestor::*[@id='jbtnRenameDialog-Menu48']";
   private final String fileMenuLocator = "//*[@id='menuJewel']";
   private final String exitButtonLocator = "//*[@id='btnjClose-Menu32']";
+  private final String pageTag = "html";
 
   public DocumentWordPage(WebDriver driver) {
     super(driver);
@@ -55,8 +56,7 @@ public class DocumentWordPage extends AbstractPage {
   }
 
   public DocumentWordPage clickButtonFile(WebDriverWait wait) {
-//    driver.navigate().refresh();
-    wait.until(presenceOfAllElementsLocatedBy(By.tagName("html")));
+    wait.until(presenceOfAllElementsLocatedBy(By.tagName(pageTag)));
     moveAndClickElement(By.xpath(fileButtonLocator), wait);
     return this;
   }
