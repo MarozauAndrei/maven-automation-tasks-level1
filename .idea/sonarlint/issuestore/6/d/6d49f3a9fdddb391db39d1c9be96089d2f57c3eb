@@ -1,0 +1,10 @@
+
+	java:S116"^Rename this field "MESSAGE_TOP_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÊÇŒ²øÿÿÿÿ8¾ıĞ£.
+>
+java:S1170"!Make this final field static too.(Í‘®8ÅšÀ›š.
+y	java:S116"]Rename this field "TOTAL_COST_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îÖË8ÅšÀ›š.
+C
+java:S1170"!Make this final field static too.(ÊÇŒ²øÿÿÿÿ8¾ıĞ£.
+|	java:S116"`Rename this field "BUFFER_BUTTON_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í‘®8ÅšÀ›š.
+>
+java:S1170"!Make this final field static too.(îÖË8ÅšÀ›š.

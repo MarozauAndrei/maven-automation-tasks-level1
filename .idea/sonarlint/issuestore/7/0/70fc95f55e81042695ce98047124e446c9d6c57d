@@ -1,0 +1,34 @@
+
+	java:S116"^Rename this field "FIRST_FRAME_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ë¶¤İùÿÿÿÿ8Ì¡ù„š.
+C
+java:S1170"!Make this final field static too.(‰Ò™ªúÿÿÿÿ8Ì¡ù„š.
+z	java:S116"^Rename this field "SAVE_BUTTON_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§Î§“8Ü† —š.
+t	java:S116"XRename this field "USAGE_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶ñ½š8Ì¡ù„š.
+C
+java:S1170"!Make this final field static too.(¥ı¬¿úÿÿÿÿ8Ì¡ù„š.
+C
+java:S1170"!Make this final field static too.(æÉİ°ûÿÿÿÿ8Ì¡ù„š.
+>
+java:S1170"!Make this final field static too.(·©Šò8Üâİ–š.
+>
+java:S1170"!Make this final field static too.(õá®8Ì¡ù„š.
+v	java:S116"ZRename this field "RESULT_LIST_TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·©Šò8Üâİ–š.
+y	java:S116"]Rename this field "DATACENTER_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õá®8Ì¡ù„š.
+>
+java:S1170"!Make this final field static too.(âàÈŞ8Ì¡ù„š.
+C
+java:S1170"!Make this final field static too.(Ë¶¤İùÿÿÿÿ8Ì¡ù„š.
+{	java:S116"_Rename this field "MACHINE_TYPE_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âàÈŞ8Ì¡ù„š.
+}	java:S116"\Rename this field "LOCAL_SSD_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰Ò™ªúÿÿÿÿ8Ì¡ù„š.
+C
+java:S1170"!Make this final field static too.(”ˆ£Öûÿÿÿÿ8Ì¡ù„š.
+‡	java:S116"fRename this field "NUMBER_OF_INSTANCES_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥ı¬¿úÿÿÿÿ8Ì¡ù„š.
+C
+java:S1170"!Make this final field static too.(ĞÔ™Şüÿÿÿÿ8íĞßÓ¡.
+>
+java:S1170"!Make this final field static too.(¶ñ½š8Ì¡ù„š.
+|	java:S116"[Rename this field "GPU_TYPE_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æÉİ°ûÿÿÿÿ8Ì¡ù„š.
+w	java:S116"VRename this field "GPU_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ĞÔ™Şüÿÿÿÿ8Ì¡ù„š.
+>
+java:S1170"!Make this final field static too.(§Î§“8Ì¡ù„š.
+	java:S116"`Rename this field "NUMBER_OF_GPU_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ˆ£Öûÿÿÿÿ8Ì¡ù„š.

@@ -1,0 +1,12 @@
+
+n	java:S116
+"RRename this field "CODE_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(∂Ç°¨8ÅñµÑö.
+7
+java:S1170"!Make this final field static too.(Ü®¶ö
+7
+java:S1170
+"!Make this final field static too.(∂Ç°¨
+7
+java:S1170"!Make this final field static too.(˚ùßû
+m	java:S116"XRename this field "TITLE_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˚ùßû
+n	java:S116"YRename this field "SYNTAX_LOCATOR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ü®¶ö

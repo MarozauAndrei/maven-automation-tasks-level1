@@ -1,27 +1,28 @@
 package task28;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
+import task28.calculator.driver.DriverSingleton;
+import task28.calculator.utils.TestListener;
 
+@Listeners({TestListener.class})
 public class CommonConditions {
-    protected WebDriver driver;
-    protected WebDriverWait webDriverWait;
-    private int webDriverTimeOut = 10;
 
-    @BeforeMethod(alwaysRun = true)
-    public void browserSetUp() {
-//        driver = DriverSingleton.getDriver();
-        driver = new ChromeDriver();
-        webDriverWait = new WebDriverWait(driver, webDriverTimeOut);
-    }
+  private int webDriverTimeOut = 10;
+  protected WebDriver driver;
+  protected WebDriverWait wait;
 
-    @AfterMethod(alwaysRun = true)
-    public void browserTurnOff() {
-//        DriverSingleton.closeBrowser();
-//        driver.quit();
-        driver = null;
-    }
+  @BeforeMethod(alwaysRun = true)
+  public void browserSetUp() {
+    driver = DriverSingleton.getDriver();
+    wait = new WebDriverWait(driver, webDriverTimeOut);
+  }
+
+  @AfterMethod(alwaysRun = true)
+  public void browserTurnOff() {
+    DriverSingleton.closeBrowser();
+  }
 }

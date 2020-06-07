@@ -3,110 +3,117 @@ package task28.calculator.model;
 import java.util.Objects;
 
 public class ComputerEngine {
-    private String numberOfInstances;
-    private String machineType;
-    private String numberOfGpu;
-    private String gpuType;
-    private String localSsd;
-    private String datacenterLocation;
-    private String committedUsage;
 
-    public ComputerEngine(String numberOfInstances, String machineType, String numberOfGpu,
-                          String gpuType, String localSsd, String datacenterLocation, String committedUsage) {
-        this.numberOfInstances = numberOfInstances;
-        this.machineType = machineType;
-        this.numberOfGpu = numberOfGpu;
-        this.gpuType = gpuType;
-        this.localSsd = localSsd;
-        this.datacenterLocation = datacenterLocation;
-        this.committedUsage = committedUsage;
-    }
+  private String numberOfInstances;
+  private String machineType;
+  private String numberOfGpu;
+  private String gpuType;
+  private String localSsd;
+  private String datacenter;
+  private String committedUsage;
 
-    public String getNumberOfInstances() {
-        return numberOfInstances;
-    }
+  public ComputerEngine(String numberOfInstances, String machineType, String numberOfGpu,
+      String gpuType, String localSsd, String datacenterLocation, String committedUsage) {
+    this.numberOfInstances = numberOfInstances;
+    this.machineType = machineType;
+    this.numberOfGpu = numberOfGpu;
+    this.gpuType = gpuType;
+    this.localSsd = localSsd;
+    this.datacenter = datacenterLocation;
+    this.committedUsage = committedUsage;
+  }
 
-    public String getMachineType() {
-        return machineType;
-    }
+  public String getNumberOfInstances() {
+    return numberOfInstances;
+  }
 
-    public String getNumberOfGpu() {
-        return numberOfGpu;
-    }
+  public String getMachineType() {
+    return machineType;
+  }
 
-    public String getGpuType() {
-        return gpuType;
-    }
+  public String getNumberOfGpu() {
+    return numberOfGpu;
+  }
 
-    public String getLocalSsd() {
-        return localSsd;
-    }
+  public String getGpuType() {
+    return gpuType;
+  }
 
-    public String getDatacenterLocation() {
-        return datacenterLocation;
-    }
+  public String getLocalSsd() {
+    return localSsd;
+  }
 
-    public String getCommittedUsage() {
-        return committedUsage;
-    }
+  public String getDatacenter() {
+    return datacenter;
+  }
 
-    public void setNumberOfInstances(String numberOfInstances) {
-        this.numberOfInstances = numberOfInstances;
-    }
+  public String getCommittedUsage() {
+    return committedUsage;
+  }
 
-    public void setMachineType(String machineType) {
-        this.machineType = machineType;
-    }
+  public void setNumberOfInstances(String numberOfInstances) {
+    this.numberOfInstances = numberOfInstances;
+  }
 
-    public void setNumberOfGpu(String numberOfGpu) {
-        this.numberOfGpu = numberOfGpu;
-    }
+  public void setMachineType(String machineType) {
+    this.machineType = machineType;
+  }
 
-    public void setGpuType(String gpuType) {
-        this.gpuType = gpuType;
-    }
+  public void setNumberOfGpu(String numberOfGpu) {
+    this.numberOfGpu = numberOfGpu;
+  }
 
-    public void setLocalSsd(String localSsd) {
-        this.localSsd = localSsd;
-    }
+  public void setGpuType(String gpuType) {
+    this.gpuType = gpuType;
+  }
 
-    public void setDatacenterLocation(String datacenterLocation) {
-        this.datacenterLocation = datacenterLocation;
-    }
+  public void setLocalSsd(String localSsd) {
+    this.localSsd = localSsd;
+  }
 
-    public void setCommittedUsage(String committedUsage) {
-        this.committedUsage = committedUsage;
-    }
+  public void setDatacenter(String datacenter) {
+    this.datacenter = datacenter;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ComputerEngine that = (ComputerEngine) o;
-        return numberOfInstances == that.numberOfInstances &&
-                numberOfGpu == that.numberOfGpu &&
-                machineType.equals(that.machineType) &&
-                gpuType.equals(that.gpuType) &&
-                localSsd.equals(that.localSsd) &&
-                datacenterLocation.equals(that.datacenterLocation) &&
-                committedUsage.equals(that.committedUsage);
-    }
+  public void setCommittedUsage(String committedUsage) {
+    this.committedUsage = committedUsage;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(numberOfInstances, machineType, numberOfGpu, gpuType, localSsd, datacenterLocation, committedUsage);
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ComputerEngine that = (ComputerEngine) o;
+    return numberOfInstances == that.numberOfInstances &&
+        numberOfGpu == that.numberOfGpu &&
+        machineType.equals(that.machineType) &&
+        gpuType.equals(that.gpuType) &&
+        localSsd.equals(that.localSsd) &&
+        datacenter.equals(that.datacenter) &&
+        committedUsage.equals(that.committedUsage);
+  }
 
-    @Override
-    public String toString() {
-        return "ComputerEngine{" +
-                "numberOfInstances=" + numberOfInstances +
-                ", machineType='" + machineType + '\'' +
-                ", numberOfGpu=" + numberOfGpu +
-                ", gpuType='" + gpuType + '\'' +
-                ", localSsd='" + localSsd + '\'' +
-                ", datacenterLocation='" + datacenterLocation + '\'' +
-                ", committedUsage='" + committedUsage + '\'' +
-                '}';
-    }
+  @Override
+  public int hashCode() {
+    return Objects
+        .hash(numberOfInstances, machineType, numberOfGpu, gpuType, localSsd, datacenter,
+            committedUsage);
+  }
+
+  @Override
+  public String toString() {
+    return "ComputerEngine{" +
+        "numberOfInstances=" + numberOfInstances +
+        ", machineType='" + machineType + '\'' +
+        ", numberOfGpu=" + numberOfGpu +
+        ", gpuType='" + gpuType + '\'' +
+        ", localSsd='" + localSsd + '\'' +
+        ", datacenter='" + datacenter + '\'' +
+        ", committedUsage='" + committedUsage + '\'' +
+        '}';
+  }
 }
