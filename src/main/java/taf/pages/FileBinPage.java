@@ -1,12 +1,9 @@
 package taf.pages;
 
-import java.util.List;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class FileBinPage extends AbstractPage {
@@ -21,10 +18,10 @@ public class FileBinPage extends AbstractPage {
     super(driver);
   }
 
-  public List<WebElement> getDocumentFromBin(WebDriverWait wait, String fileName) {
+  public boolean isDocumentFromBinEmpty(WebDriverWait wait, String fileName) {
     driver.navigate().refresh();
     wait.until(presenceOfAllElementsLocatedBy(By.id(binAreaId)));
-    return driver.findElements(By.xpath(makeLocator(fileName)));
+    return driver.findElements(By.xpath(makeLocator(fileName))).isEmpty();
   }
 
   public FileBinPage clickButtonClearBin(WebDriverWait wait) {

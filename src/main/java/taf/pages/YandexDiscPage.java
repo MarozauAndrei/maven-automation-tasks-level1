@@ -1,11 +1,9 @@
 package taf.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class YandexDiscPage extends AbstractPage {
@@ -20,9 +18,9 @@ public class YandexDiscPage extends AbstractPage {
     super(driver);
   }
 
-  public WebElement getTitle(WebDriverWait wait) {
+  public boolean pageTitleIsEnabled(WebDriverWait wait) {
     wait.until(presenceOfElementLocated(By.xpath(yandexDiscTitleLocator)));
-    return driver.findElement(By.xpath(yandexDiscTitleLocator));
+    return driver.findElement(By.xpath(yandexDiscTitleLocator)).isEnabled();
   }
 
   public YandexDiscPage openMainMenuSection(WebDriverWait wait, String partOfTitle) {

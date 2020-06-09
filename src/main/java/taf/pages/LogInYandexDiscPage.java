@@ -1,10 +1,11 @@
 package taf.pages;
 
-import java.util.List;
-import org.openqa.selenium.*;
-
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LogInYandexDiscPage extends AbstractPage {
@@ -29,8 +30,13 @@ public class LogInYandexDiscPage extends AbstractPage {
     return new YandexDiscPage(driver);
   }
 
-  public List<WebElement> getMistakeField(WebDriverWait wait) {
-    wait.until(visibilityOfAllElementsLocatedBy(By.xpath(loginMistakeLocator)));
-    return driver.findElements(By.xpath(loginMistakeLocator));
+  public boolean isMistakeEmpty(WebDriverWait wait) {
+    return getElementList(By.xpath(loginMistakeLocator), wait)
+        .isEmpty();
+  }
+
+  private List<WebElement> getElementList(By by, WebDriverWait wait) {
+    wait.until(visibilityOfAllElementsLocatedBy(by));
+    return driver.findElements(by);
   }
 }

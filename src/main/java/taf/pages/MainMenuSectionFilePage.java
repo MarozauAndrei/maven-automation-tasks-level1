@@ -1,11 +1,10 @@
 package taf.pages;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
-
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MainMenuSectionFilePage extends AbstractPage {

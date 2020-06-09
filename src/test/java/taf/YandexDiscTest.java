@@ -2,10 +2,8 @@ package taf;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -13,7 +11,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import taf.pages.*;
+import taf.pages.DocumentWordPage;
+import taf.pages.FileBinPage;
+import taf.pages.FileDirectoryPage;
+import taf.pages.LogInYandexDiscPage;
+import taf.pages.MainMenuSectionFilePage;
+import taf.pages.YandexDiscPage;
+import taf.pages.YandexDiscStartPage;
 
 public class YandexDiscTest {
 
@@ -27,17 +31,15 @@ public class YandexDiscTest {
   private String textToFile = "Hello world!";
   private WebDriver driver;
   private WebDriverWait wait;
-  private static Map<String, String> checkingMap = new HashMap<>();
-
-  static {
-    checkingMap.put("Последние", "Последние");
-    checkingMap.put("Файлы", "Файлы");
-    checkingMap.put("Фото", "фотографии");
-    checkingMap.put("Общий доступ", "ссылки");
-    checkingMap.put("История", "История");
-    checkingMap.put("Архив", "Архив");
-    checkingMap.put("Корзина", "Корзина");
-  }
+  private Map<String, String> checkingMap = new HashMap<String, String>() {{
+    put("Последние", "Последние");
+    put("Файлы", "Файлы");
+    put("Фото", "фотографии");
+    put("Общий доступ", "ссылки");
+    put("История", "История");
+    put("Архив", "Архив");
+    put("Корзина", "Корзина");
+  }};
 
   @BeforeClass(alwaysRun = true)
   public void browserSetUp() {
@@ -47,12 +49,12 @@ public class YandexDiscTest {
 
   @Test(priority = 0, description = "Test №0 - Negative login in yandex disc ")
   public void checkNegativeLogin() {
-    List<WebElement> mistakeField = new YandexDiscStartPage(driver)
+    boolean isMistakeEmpty = new YandexDiscStartPage(driver)
         .openPage()
         .clickLogInButton(wait)
         .inputLogin(wait, invalidLogin)
-        .getMistakeField(wait);
-    Assert.assertFalse(mistakeField.isEmpty(), " Mistake in login is not visible ");
+        .isMistakeEmpty(wait);
+    Assert.assertFalse(isMistakeEmpty, " Mistake in login is not visible ");
   }
 
   @Test(priority = 1, description = "Test №1 - Negative password in yandex disc ")
@@ -62,7 +64,7 @@ public class YandexDiscTest {
         .clickLogInButton(wait);
     loginPage.inputLogin(wait, validUserLogin)
         .inputPassword(wait, invalidPassword);
-    Assert.assertFalse(loginPage.getMistakeField(wait).isEmpty(),
+    Assert.assertFalse(loginPage.isMistakeEmpty(wait),
         " Mistake in password is not visible ");
   }
 
@@ -73,9 +75,10 @@ public class YandexDiscTest {
         .clickLogInButton(wait)
         .inputLogin(wait, validUserLogin)
         .inputPassword(wait, validUserPassword);
-    Assert.assertTrue(discPage.getTitle(wait).isEnabled(), " Login failed! ");
+    boolean isPageTitlePresent = discPage.pageTitleIsEnabled(wait);
     discPage.clickUserManageButton(wait)
         .clickQuitUserButton(wait);
+    Assert.assertTrue(isPageTitlePresent, " Login failed! ");
   }
 
   @Test(priority = 3, description = "Test №3 - Check main menu ")
@@ -91,9 +94,9 @@ public class YandexDiscTest {
           .getTitleMainMenuSection(wait);
       softAssert.assertTrue(title.contains(checkingMap.get(key)), "MISTAKE in - " + key);
     }
-    softAssert.assertAll();
     discPage.clickUserManageButton(wait)
         .clickQuitUserButton(wait);
+    softAssert.assertAll();
   }
 
   @Test(priority = 4, description = "Test №4 - Create new directory in Files ")
@@ -103,15 +106,14 @@ public class YandexDiscTest {
         .clickLogInButton(wait)
         .inputLogin(wait, validUserLogin)
         .inputPassword(wait, validUserPassword);
-    WebElement directoryTitle = new MainMenuSectionFilePage(driver)
+    String directoryTitle = new MainMenuSectionFilePage(driver)
         .contextClickFileSection(wait)
         .createNewDirectory(wait)
         .inputDirectoryName(wait, directoryName)
         .clickSaveDirectoryButton()
         .openDirectory(wait, directoryName)
         .getDirectoryTitle(wait);
-    Assert.assertEquals(directoryTitle.getAttribute("title"), directoryName,
-        " Directory was not created! ");
+    Assert.assertEquals(directoryTitle, directoryName, " Directory was not created! ");
   }
 
   @Test(dependsOnMethods = {
@@ -121,73 +123,63 @@ public class YandexDiscTest {
     DocumentWordPage docWord = fileDirectory
         .contextClickDirectoryArea(wait)
         .createNewDocument(wait)
-        .goToDocumentTab()
-        .goToDocumentFrame(wait)
         .clickButtonFile(wait)
         .clickButtonCloseMenu(wait)
         .clickButtonFile(wait)
         .clickButtonRename(wait)
         .inputFileName(fileName)
-        .writeText(wait, textToFile)
+        .inputText(wait, textToFile)
         .clickButtonFile(wait)
-        .clickButtonCloseDocument(wait)
-        .leaveDocumentTab();
-
-    List<WebElement> document = fileDirectory
+        .clickButtonCloseDocument(wait);
+    boolean isDocumentEmpty = fileDirectory
         .returnToFileSection(wait)
         .openDirectory(wait, directoryName)
-        .getElementNameDocument(wait, fileName);
+        .isElementEmpty(wait, fileName);
     SoftAssert softAssert = new SoftAssert();
-    softAssert.assertFalse(document.isEmpty(), " New document is not visible! ");
-
+    softAssert.assertFalse(isDocumentEmpty, " New document is not visible! ");
     String textFromDocument = fileDirectory
         .openDocument(wait, fileName)
-        .goToDocumentTab()
-        .goToDocumentFrame(wait)
         .getTextFromDocument(wait);
     softAssert.assertEquals(textFromDocument, textToFile, " Text in document is wrong! ");
-    softAssert.assertAll();
-
     docWord
         .clickButtonFile(wait)
-        .clickButtonCloseDocument(wait)
-        .leaveDocumentTab();
+        .clickButtonCloseDocument(wait);
+    softAssert.assertAll();
   }
 
   @Test(dependsOnMethods = {"createAndCheckNewDirectory",
       "createAndCheckNewDocument"}, description = "Test №6 - Delete document")
   public void checkOfDeleteDocument() {
     FileDirectoryPage fileDirectory = new FileDirectoryPage(driver);
-    List<WebElement> document = fileDirectory
+    boolean isDocumentEmpty = fileDirectory
         .contextClickDocument(wait, fileName)
         .deleteDocument(wait)
         .returnToFileSection(wait)
         .openDirectory(wait, directoryName)
-        .getElementNameDocument(wait, fileName);
+        .isElementEmpty(wait, fileName);
     SoftAssert softAssert = new SoftAssert();
-    softAssert.assertTrue(document.isEmpty(), " Document not deleted from directory ");
-
-    List<WebElement> documentFromBin = fileDirectory
+    softAssert.assertTrue(isDocumentEmpty, " Document not deleted from directory ");
+    boolean isDocumentFromBinEmpty = fileDirectory
         .returnToFileSection(wait)
         .openBin(wait)
-        .getDocumentFromBin(wait, fileName);
-    softAssert.assertFalse(documentFromBin.isEmpty(), " Document not absent in bin ");
+        .isDocumentFromBinEmpty(wait, fileName);
+    softAssert.assertFalse(isDocumentFromBinEmpty, " Document not absent in bin ");
     softAssert.assertAll();
   }
 
-  @Test(dependsOnMethods = {
+  @Test(dependsOnMethods = {"createAndCheckNewDirectory", "createAndCheckNewDocument",
       "checkOfDeleteDocument"}, description = "Test №6 - Delete document from bin")
   public void checkOfCleaningBin() {
-    List<WebElement> documentFromBin = new FileBinPage(driver)
+    boolean isDocumentFromBinEmpty = new FileBinPage(driver)
         .clickButtonClearBin(wait)
         .clickButtonClear(wait)
-        .getDocumentFromBin(wait, fileName);
-    Assert.assertTrue(documentFromBin.isEmpty(), " Document not deleted from bin ");
+        .isDocumentFromBinEmpty(wait, fileName);
+    Assert.assertTrue(isDocumentFromBinEmpty, " Document not deleted from bin ");
   }
 
   @AfterClass(alwaysRun = true)
   public void browserTurnOff() {
-//    driver.quit();
+    driver.quit();
     driver = null;
   }
 }

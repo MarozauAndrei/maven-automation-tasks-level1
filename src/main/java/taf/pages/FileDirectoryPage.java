@@ -1,16 +1,15 @@
 package taf.pages;
 
-import java.util.List;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
+import java.util.ArrayList;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class FileDirectoryPage extends AbstractPage {
 
+  private int indexWordPage = 1;
   private final String directoryTitleLocator = "//*[@class='client-listing']/descendant::h1";
   private final String userDirectoryLocator = "//*[@class='client-listing']";
   private final String createNewDocumentLocator = "//*[text()='Текстовый документ']/parent::*";
@@ -23,9 +22,9 @@ public class FileDirectoryPage extends AbstractPage {
     super(driver);
   }
 
-  public WebElement getDirectoryTitle(WebDriverWait wait) {
+  public String getDirectoryTitle(WebDriverWait wait) {
     wait.until(visibilityOfAllElementsLocatedBy(By.xpath(directoryTitleLocator)));
-    return driver.findElement(By.xpath(directoryTitleLocator));
+    return driver.findElement(By.xpath(directoryTitleLocator)).getAttribute("title");
   }
 
   public FileDirectoryPage contextClickDirectoryArea(WebDriverWait wait) {
@@ -35,18 +34,20 @@ public class FileDirectoryPage extends AbstractPage {
 
   public DocumentWordPage createNewDocument(WebDriverWait wait) {
     clickElement(By.xpath(createNewDocumentLocator), wait);
+    moveToDocumentTab();
     return new DocumentWordPage(driver);
   }
 
-  public List<WebElement> getElementNameDocument(WebDriverWait wait, String fileName) {
+  public boolean isElementEmpty(WebDriverWait wait, String fileName) {
     driver.navigate().refresh();
     wait.until(presenceOfAllElementsLocatedBy(By.tagName(pageTag)));
-    return driver.findElements(By.xpath(makeLocator(fileName)));
+    return driver.findElements(By.xpath(makeLocator(fileName))).isEmpty();
   }
 
   public DocumentWordPage openDocument(WebDriverWait wait, String fileName) {
     wait.until(presenceOfAllElementsLocatedBy(By.xpath(userDirectoryLocator)));
     doubleClickElement(By.xpath(makeLocator(fileName)), wait);
+    moveToDocumentTab();
     return new DocumentWordPage(driver);
   }
 
@@ -64,5 +65,10 @@ public class FileDirectoryPage extends AbstractPage {
   public MainMenuSectionFilePage returnToFileSection(WebDriverWait wait) {
     clickElement(By.xpath(returnToDiskButtonLocator), wait);
     return new MainMenuSectionFilePage(driver);
+  }
+
+  private void moveToDocumentTab() {
+    ArrayList<String> tabsList = new ArrayList<>(driver.getWindowHandles());
+    driver.switchTo().window(tabsList.get(indexWordPage));
   }
 }
