@@ -3,7 +3,7 @@
 /target/pom.
 /target
 .idea*
-.gitignore
 .iml
 .txt
 /maven-automation-tasks-level1.iml
+.idea

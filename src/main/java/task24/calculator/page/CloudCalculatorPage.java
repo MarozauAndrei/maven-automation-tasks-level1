@@ -1,4 +1,4 @@
-package main.java.task24.calculator.page;
+package task24.calculator.page;
 
 import java.util.List;
 import org.openqa.selenium.By;
