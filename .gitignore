@@ -1,10 +1,9 @@
 # Project exclude paths
-<<<<<<< HEAD
+
 /target/pom.
-=======
 /target
 .idea*
-.gitignore
-
+.iml
 .txt
->>>>>>> 8737406916e6539f433f9cc4d99ff654efb78c04
+/maven-automation-tasks-level1.iml
+.idea

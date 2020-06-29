@@ -1,12 +1,12 @@
 package task24.calculator.page;
 
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.util.List;
 
 public class CloudCalculatorPage {
     private final String FIRST_FRAME_LOCATOR = "//*[@id='cloud-site']/devsite-iframe/iframe";
@@ -72,8 +72,8 @@ public class CloudCalculatorPage {
         executor.executeScript("arguments[0].click();", optionsOfUsage.get(1));
     }
 
-    public EstimateWindowPage saveEstimate(JavascriptExecutor executor) {
+    public task24.calculator.page.EstimateWindowPage saveEstimate(JavascriptExecutor executor) {
         executor.executeScript("arguments[0].click();", driver.findElement(By.xpath(SAVE_BUTTON_LOCATOR)));
-        return new EstimateWindowPage(driver);
+        return new task24.calculator.page.EstimateWindowPage(driver);
     }
 }
