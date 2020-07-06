@@ -24,20 +24,20 @@ public class TenMinutesMailPage extends AbstractPage {
     super(driver);
   }
 
-  public String getEmaiAddress(WebDriverWait wait) throws IOException, UnsupportedFlavorException {
+  public String getEmaiAddress() throws IOException, UnsupportedFlavorException {
     openMailTab();
     moveAndClickElement(wait, By.xpath(bufferButtonLocator));
     return (String) Toolkit.getDefaultToolkit().getSystemClipboard()
         .getData(DataFlavor.stringFlavor);
   }
 
-  public TenMinutesMailPage openReceiveMail(WebDriverWait wait) {
+  public TenMinutesMailPage openReceiveMail() {
     moveToMailTab();
     clickElement(wait, By.xpath(messageTopLocator));
     return this;
   }
 
-  public String getCostFromEmail(WebDriverWait wait) {
+  public String getCostFromEmail() {
     wait.until(presenceOfElementLocated(By.xpath(totalCostLocator)));
     return driver.findElement(By.xpath(totalCostLocator)).getText();
   }

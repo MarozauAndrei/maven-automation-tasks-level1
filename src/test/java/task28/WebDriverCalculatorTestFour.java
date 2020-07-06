@@ -6,8 +6,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import task28.calculator.model.ComputerEngine;
 import task28.calculator.page.EstimateWindowPage;
-import task28.calculator.page.StartCloudPage;
+import task28.calculator.service.CalculatorService;
 import task28.calculator.service.ComputeEngineCreator;
+import task28.calculator.service.MailService;
 
 public class WebDriverCalculatorTestFour extends CommonConditions {
 
@@ -15,28 +16,12 @@ public class WebDriverCalculatorTestFour extends CommonConditions {
   public void completeGoogleCalculatorAndSendEmail()
       throws IOException, UnsupportedFlavorException {
     ComputerEngine testEngine = ComputeEngineCreator.createNewComputerEngine();
-    EstimateWindowPage estimate = new StartCloudPage(driver)
-        .openStartPage()
-        .clickSearchButton(wait)
-        .inputSearchString()
-        .selectCalculator(wait)
-        .inputNumberOfInstance(wait, testEngine)
-        .jsSelectVariable(testEngine.getMachineType())
-        .jsClickGpuCheckbox()
-        .inputNumberOfGpu(wait, testEngine)
-        .jsSelectVariable(testEngine.getGpuType())
-        .jsSelectVariable(testEngine.getLocalSsd())
-        .jsSelectVariable(testEngine.getDatacenter())
-        .jsSelectVariable(testEngine.getCommittedUsage())
-        .jsSaveEstimate();
+    EstimateWindowPage estimate = new CalculatorService()
+        .writeInCalculator(driver, testEngine);
     String costFromCalculator = estimate.getEstimatedCost();
-    String emailAddress = estimate
-        .jsClickEmailButton(wait)
-        .getEmaiAddress(wait);
-    String costFromEmail = estimate
-        .jsSendEmail(wait, emailAddress)
-        .openReceiveMail(wait)
-        .getCostFromEmail(wait);
+    MailService mailService = new MailService();
+    String emailAddress = mailService.getAddress(estimate);
+    String costFromEmail = mailService.getCost(estimate, emailAddress);
     if (costFromEmail.isEmpty()) {
       costFromEmail = "No cost from Email";
     }

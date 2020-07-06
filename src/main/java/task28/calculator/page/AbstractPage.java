@@ -11,14 +11,17 @@ import task28.calculator.utils.Log;
 
 public class AbstractPage {
 
-  protected final String firstFrameLocator = "//*[@id='cloud-site']/devsite-iframe/iframe";
-  protected String nameOfSecondFrame = "myFrame";
+  private int webDriverTimeOut = 10;
+  private final String firstFrameLocator = "//*[@id='cloud-site']/devsite-iframe/iframe";
+  private String nameOfSecondFrame = "myFrame";
   protected WebDriver driver;
+  protected WebDriverWait wait;
   protected JavascriptExecutor executor;
   protected Actions action;
 
   protected AbstractPage(WebDriver driver) {
     this.driver = driver;
+    this.wait = new WebDriverWait(driver, webDriverTimeOut);
     this.executor = (JavascriptExecutor) driver;
     this.action = new Actions(driver);
   }

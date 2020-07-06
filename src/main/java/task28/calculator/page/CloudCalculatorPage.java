@@ -9,7 +9,7 @@ import task28.calculator.model.ComputerEngine;
 
 public class CloudCalculatorPage extends AbstractPage {
 
-  private final String numberOfInstancesLocator = "//*[@id='input_58']";
+  private final String numberOfInstancesLocator = "//*[@id='input_59']";
   private final String selectLocatorFormat = "//*[contains(text(),'%s')]/parent::*";
   private final String gpuLocator = "//*[@aria-label='Add GPUs']/*[@class='md-container md-ink-ripple']";
   private final String numberOfGpuLocator = "//*[@placeholder='Number of GPUs']";
@@ -20,7 +20,7 @@ public class CloudCalculatorPage extends AbstractPage {
     super(driver);
   }
 
-  public CloudCalculatorPage inputNumberOfInstance(WebDriverWait wait, ComputerEngine engine) {
+  public CloudCalculatorPage inputNumberOfInstance(ComputerEngine engine) {
     moveToFrame(wait);
     inputText(wait, By.xpath(numberOfInstancesLocator), engine.getNumberOfInstances());
     return this;
@@ -37,7 +37,7 @@ public class CloudCalculatorPage extends AbstractPage {
     return this;
   }
 
-  public CloudCalculatorPage inputNumberOfGpu(WebDriverWait wait, ComputerEngine engine) {
+  public CloudCalculatorPage inputNumberOfGpu(ComputerEngine engine) {
     inputText(wait, By.xpath(numberOfGpuLocator), engine.getNumberOfGpu());
     return this;
   }

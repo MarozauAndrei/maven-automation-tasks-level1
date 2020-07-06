@@ -12,6 +12,8 @@ public class ComputerEngine {
   private String datacenter;
   private String committedUsage;
 
+  public ComputerEngine() {}
+
   public ComputerEngine(String numberOfInstances, String machineType, String numberOfGpu,
       String gpuType, String localSsd, String datacenterLocation, String committedUsage) {
     this.numberOfInstances = numberOfInstances;

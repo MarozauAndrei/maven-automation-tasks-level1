@@ -5,7 +5,7 @@ import java.util.List;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import task28.calculator.model.ComputerEngine;
-import task28.calculator.page.StartCloudPage;
+import task28.calculator.service.CalculatorService;
 import task28.calculator.service.ComputeEngineCreator;
 
 public class WebDriverCalculatorTestThree extends CommonConditions {
@@ -22,21 +22,9 @@ public class WebDriverCalculatorTestThree extends CommonConditions {
   @Test(description = "Test N3 - Check of completing google calculator")
   public void completeAndCheckGoogleCalculator() {
     ComputerEngine testEngine = ComputeEngineCreator.createNewComputerEngine();
-    List<String> estimateResult = new StartCloudPage(driver)
-        .openStartPage()
-        .clickSearchButton(wait)
-        .inputSearchString()
-        .selectCalculator(wait)
-        .inputNumberOfInstance(wait, testEngine)
-        .jsSelectVariable(testEngine.getMachineType())
-        .jsClickGpuCheckbox()
-        .inputNumberOfGpu(wait, testEngine)
-        .jsSelectVariable(testEngine.getGpuType())
-        .jsSelectVariable(testEngine.getLocalSsd())
-        .jsSelectVariable(testEngine.getDatacenter())
-        .jsSelectVariable(testEngine.getCommittedUsage())
-        .jsSaveEstimate()
-        .getListOfEstimateResults(wait);
+    List<String> estimateResult = new CalculatorService()
+        .writeInCalculator(driver, testEngine)
+        .getListOfEstimateResults();
     estimateResult.remove(0);
     SoftAssert softAssert = new SoftAssert();
     for (int i = 1; i < estimateResult.size(); i++) {

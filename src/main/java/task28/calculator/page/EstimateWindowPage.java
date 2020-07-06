@@ -25,7 +25,7 @@ public class EstimateWindowPage extends AbstractPage {
     super(driver);
   }
 
-  public List<String> getListOfEstimateResults(WebDriverWait wait) {
+  public List<String> getListOfEstimateResults() {
     List<WebElement> optionsOfResult = getListOfEstimateElements(wait);
     return getTextFromElements(optionsOfResult);
   }
@@ -34,13 +34,13 @@ public class EstimateWindowPage extends AbstractPage {
     return driver.findElement(By.xpath(estimatedCostLocator)).getText();
   }
 
-  public TenMinutesMailPage jsClickEmailButton(WebDriverWait wait) {
+  public TenMinutesMailPage jsClickEmailButton() {
     jsClickElement(By.xpath(emailButtonLocator));
     wait.until(presenceOfAllElementsLocatedBy(By.xpath(EemailAreaLocator)));
     return new TenMinutesMailPage(driver);
   }
 
-  public TenMinutesMailPage jsSendEmail(WebDriverWait wait, String emailAddress) {
+  public TenMinutesMailPage jsSendEmail(String emailAddress) {
     moveToEstimateTab();
     moveToFrame(wait);
     driver.findElement(By.xpath(emailAddressFieldLocator)).

@@ -3,7 +3,6 @@ package task28.calculator.page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class StartCloudPage extends AbstractPage {
 
@@ -21,7 +20,7 @@ public class StartCloudPage extends AbstractPage {
     return this;
   }
 
-  public StartCloudPage clickSearchButton(WebDriverWait wait) {
+  public StartCloudPage clickSearchButton() {
     clickElement(wait, By.xpath(searchButtonLocator));
     return this;
   }

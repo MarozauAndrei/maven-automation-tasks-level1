@@ -2,7 +2,6 @@ package task28.calculator.page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SearchResultPage extends AbstractPage {
 
@@ -13,7 +12,7 @@ public class SearchResultPage extends AbstractPage {
     super(driver);
   }
 
-  public CloudCalculatorPage selectCalculator(WebDriverWait wait) {
+  public CloudCalculatorPage selectCalculator() {
     clickElement(wait, By.xpath(calculatorButtonLocator));
     return new CloudCalculatorPage(driver);
   }
